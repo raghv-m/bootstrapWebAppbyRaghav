@@ -480,8 +480,15 @@ button:focus-visible,
     transition: background-color 0.3s ease, width 0.3s ease;
 }
 
+.hero-carousel .carousel-indicators [data-bs-target] {
+    width: 44px;
+    padding-left: 7px;
+    padding-right: 7px;
+    background-clip: content-box;
+}
+
 .hero-carousel .carousel-indicators .active {
-    width: 42px;
+    width: 56px;
     background-color: var(--amber);
 }
 
@@ -781,7 +788,7 @@ button:focus-visible,
     color: #b9c9cf;
 }
 
-.site-footer h4 {
+.site-footer .footer-heading {
     color: #fff;
     font-family: "Barlow", sans-serif;
     font-size: 17px;
@@ -933,5 +940,31 @@ button:focus-visible,
     .program-card:hover, .step-card:hover, .involve-card:hover,
     .btn-brand:hover, .btn-outline-ink:hover, .btn-involve:hover {
         transform: none;
+    }
+}
+
+/* Audit 2026-11: mobile Book button, footer and contact tap heights */
+.navbar .btn-brand.btn-sm {
+    width: auto;
+    white-space: nowrap;
+    padding: .4rem .9rem;
+    margin-top: 0;
+}
+
+.site-footer a {
+    display: inline-block;
+    padding: .45rem 0;
+}
+
+.contact-list a {
+    display: inline-block;
+    padding: .45rem 0;
+}
+
+/* The custom inline-flex toggler rule above overrode Bootstrap's
+   desktop hide, so the hamburger showed next to the full nav */
+@media (min-width: 992px) {
+    .site-nav .navbar-toggler {
+        display: none;
     }
 }
