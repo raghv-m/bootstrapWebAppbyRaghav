@@ -1,5 +1,5 @@
 // UpChances motion.
-// Two jobs, both defensive:
+// Three jobs, all defensive:
 //  1. Scroll reveals that can never leave a section blank. Elements
 //     fade in fast (CSS keeps it to 0.45s), anything already scrolled
 //     past is revealed immediately, a scroll safety net catches
@@ -8,6 +8,8 @@
 //     ever hidden in the first place.
 //  2. Hero carousel manners: pause while touched or focused, and
 //     park on the first slide for reduced-motion readers.
+//  3. Mobile nav manners: tapping a link in the open menu closes
+//     the menu, instead of leaving it hanging over the section.
 (function () {
     "use strict";
 
@@ -43,6 +45,39 @@
             carouselEl.addEventListener("focusin", hold);
             carouselEl.addEventListener("focusout", release);
         }
+    }
+
+    /* ---- Mobile nav: a tapped link closes the open menu ---- */
+    // On phones the collapse panel would otherwise stay open after
+    // the jump and cover the section the reader just asked for. Any
+    // link inside it (nav links and the CTA alike) closes it; the
+    // browser's own anchor jump still runs, and the CSS
+    // scroll-margin-top keeps the landing clear of the sticky bar.
+    // On desktop the panel never carries .show, so this is a no-op
+    // there. Bootstrap's hide() also resets the toggler's
+    // aria-expanded and .collapsed class, so the button state stays
+    // truthful.
+    var navCollapse = document.getElementById("navbarNav");
+    if (navCollapse) {
+        navCollapse.addEventListener("click", function (event) {
+            if (!event.target.closest("a") || !navCollapse.classList.contains("show")) {
+                return;
+            }
+            if (window.bootstrap && window.bootstrap.Collapse) {
+                window.bootstrap.Collapse.getOrCreateInstance(navCollapse).hide();
+            } else {
+                // Bootstrap bundle missing: drop the open state by
+                // hand and reset the toggler so it tells the truth,
+                // rather than throwing and leaving the menu stuck.
+                navCollapse.classList.remove("show", "collapsing");
+                navCollapse.style.removeProperty("height");
+                var togglers = document.querySelectorAll('[data-bs-target="#navbarNav"]');
+                Array.prototype.forEach.call(togglers, function (toggler) {
+                    toggler.classList.add("collapsed");
+                    toggler.setAttribute("aria-expanded", "false");
+                });
+            }
+        });
     }
 
     /* ---- Scroll reveal ---- */
