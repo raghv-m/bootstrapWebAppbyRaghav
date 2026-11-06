@@ -328,6 +328,8 @@ section[id], header[id] {
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 16px;
     padding: 34px 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .involve-card h3 {
@@ -344,6 +346,9 @@ section[id], header[id] {
     color: var(--amber);
     font-weight: 700;
     text-decoration: none;
+    margin-top: auto;
+    padding-top: 8px;
+    align-self: flex-start;
 }
 
 .involve-link:hover {
@@ -353,7 +358,7 @@ section[id], header[id] {
 
 /* Contact */
 .contact-title {
-    font-size: 38px;
+    font-size: 40px;
     margin-bottom: 16px;
 }
 
@@ -467,5 +472,50 @@ section[id], header[id] {
     }
     .section-head h2 {
         font-size: 32px;
+    }
+}
+
+/* Scroll reveal (paired with js/animations.js) */
+.js .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.js .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Mobile: Programs and Get involved cards become swipeable rows */
+@media (max-width: 767.98px) {
+    #programs .row,
+    #get-involved .row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 12px;
+        scrollbar-width: none;
+    }
+
+    #programs .row::-webkit-scrollbar,
+    #get-involved .row::-webkit-scrollbar {
+        display: none;
+    }
+
+    #programs .row > *,
+    #get-involved .row > * {
+        flex: 0 0 82%;
+        max-width: 82%;
+        scroll-snap-align: start;
     }
 }
