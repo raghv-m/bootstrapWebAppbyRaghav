@@ -1,5 +1,12 @@
+/* ============================================================
+   UpChances custom styles
+   Loaded after Bootstrap, so these rules build on the framework.
+   Sections: base, buttons, navigation, hero, photos, sections,
+   cards, about, get involved, contact, footer, responsive.
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
 
+/* Base: palette, typography and page defaults */
 :root {
     --ink: #152a33;
     --navy: #0e2e3d;
@@ -192,6 +199,36 @@ section[id], header[id] {
     font-weight: 700;
     text-align: center;
     line-height: 22px;
+}
+
+/* Placeholder photos: fixed aspect ratios keep the layout
+   from shifting while images load */
+.photo-hero {
+    display: block;
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    margin-top: 56px;
+}
+
+.photo-about {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-top: 32px;
+}
+
+.photo-card {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 22px;
 }
 
 /* Sections */
@@ -460,6 +497,7 @@ section[id], header[id] {
     font-size: 15px;
 }
 
+/* Responsive: tablet adjustments */
 @media (max-width: 991px) {
     .hero {
         padding: 56px 0 64px;
@@ -517,5 +555,73 @@ section[id], header[id] {
         flex: 0 0 82%;
         max-width: 82%;
         scroll-snap-align: start;
+    }
+}
+
+/* Responsive: small phones (around 360px wide).
+   Tighter type and padding so nothing feels cramped or overflows */
+@media (max-width: 575.98px) {
+    .hero {
+        padding: 48px 0 56px;
+    }
+
+    .hero-title {
+        font-size: 34px;
+    }
+
+    .hero-lead {
+        font-size: 18px;
+    }
+
+    .hero-card {
+        padding: 26px 22px;
+    }
+
+    .hero-card-title {
+        font-size: 25px;
+    }
+
+    .photo-hero {
+        aspect-ratio: 4 / 3;
+        margin-top: 36px;
+    }
+
+    .section-head h2 {
+        font-size: 28px;
+    }
+
+    .section-lead {
+        font-size: 17px;
+    }
+
+    .about-title {
+        font-size: 32px;
+    }
+
+    .about-text {
+        font-size: 17px;
+    }
+
+    .contact-title {
+        font-size: 30px;
+    }
+
+    .program-card,
+    .step-card,
+    .involve-card {
+        padding: 26px 22px;
+    }
+
+    .contact-form {
+        padding: 24px 20px;
+    }
+
+    .site-nav .nav-link {
+        margin-left: 0;
+    }
+
+    .btn-lg {
+        padding: 12px 22px;
+        font-size: 16px;
     }
 }
