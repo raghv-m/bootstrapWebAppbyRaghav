@@ -421,9 +421,10 @@ button:focus-visible,
 
 /* Hero carousel: Bootstrap's component restyled to the palette.
    Fixed aspect ratios keep the layout from shifting while
-   images load. Controls and indicators keep 44px+ hit areas:
-   the indicator bars stay slim visually, but transparent top
-   and bottom borders stretch the tappable box around them. */
+   images load. Controls and indicators keep full 44x44px hit
+   areas: the indicator bars stay slim visually, but transparent
+   borders on all four sides stretch the tappable box to 44px
+   in both dimensions around them. */
 .hero-carousel {
     margin-top: 56px;
     border-radius: 18px;
@@ -473,6 +474,8 @@ button:focus-visible,
     height: 6px;
     border-top: 19px solid transparent;
     border-bottom: 19px solid transparent;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
     background-clip: padding-box;
     border-radius: 999px;
     background-color: rgba(255, 255, 255, 0.45);
@@ -482,6 +485,8 @@ button:focus-visible,
 
 .hero-carousel .carousel-indicators .active {
     width: 42px;
+    border-left-width: 1px;
+    border-right-width: 1px;
     background-color: var(--amber);
 }
 
@@ -773,6 +778,26 @@ button:focus-visible,
     box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.25);
 }
 
+/* Form delivery feedback (paired with js/animations.js). The
+   message stays hidden until a send is attempted, and only
+   turns into the success note after the server confirms. */
+.form-status {
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.form-status.is-success {
+    background: #e7f2e4;
+    color: #20512a;
+}
+
+.form-status.is-error {
+    background: #fbe9e7;
+    color: #8c2b1d;
+}
+
 /* Footer */
 .site-footer {
     background: var(--navy-deep);
@@ -781,7 +806,7 @@ button:focus-visible,
     color: #b9c9cf;
 }
 
-.site-footer h4 {
+.site-footer h3 {
     color: #fff;
     font-family: "Barlow", sans-serif;
     font-size: 17px;
@@ -810,7 +835,7 @@ button:focus-visible,
     color: #b9c9cf;
     text-decoration: none;
     display: inline-block;
-    padding: 4px 0;
+    padding: .5rem 0;
     transition: color 0.25s ease, transform 0.25s ease;
 }
 

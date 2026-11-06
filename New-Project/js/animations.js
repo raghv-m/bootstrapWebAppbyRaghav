@@ -1,5 +1,5 @@
 // UpChances motion.
-// Three jobs, all defensive:
+// Four jobs, all defensive:
 //  1. Scroll reveals that can never leave a section blank. Elements
 //     fade in fast (CSS keeps it to 0.45s), anything already scrolled
 //     past is revealed immediately, a scroll safety net catches
@@ -10,6 +10,8 @@
 //     park on the first slide for reduced-motion readers.
 //  3. Mobile nav manners: tapping a link in the open menu closes
 //     the menu, instead of leaving it hanging over the section.
+//  4. Contact form delivery: the fields post to a real endpoint,
+//     and the success note shows only after the server confirms.
 (function () {
     "use strict";
 
@@ -77,6 +79,69 @@
                     toggler.setAttribute("aria-expanded", "false");
                 });
             }
+        });
+    }
+
+    /* ---- Contact form: real delivery, honest feedback ---- */
+    // The form used to point at a mailto: action, which quietly
+    // fails for anyone without a mail app set up. It now posts
+    // the fields as JSON to the FormSubmit AJAX endpoint. The
+    // success note appears only after the server answers 2xx;
+    // anything else shows an error with the plain email address
+    // as the fallback, so no message is ever silently lost.
+    // (FormSubmit needs a one-time activation: the first real
+    // submission sends an activation email to the inbox it
+    // delivers to, and deliveries start once that is confirmed.)
+    var contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+        var formStatus = document.getElementById("form-status");
+        var submitButton = contactForm.querySelector('[type="submit"]');
+        var submitLabel = submitButton ? submitButton.textContent : "";
+
+        var showStatus = function (kind, text) {
+            if (!formStatus) {
+                return;
+            }
+            formStatus.hidden = false;
+            formStatus.className = "form-status is-" + kind;
+            formStatus.textContent = text;
+        };
+
+        contactForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            var fields = contactForm.elements;
+            var payload = {
+                name: fields.name.value.trim(),
+                email: fields.email.value.trim(),
+                topic: fields.topic.value,
+                message: fields.message.value.trim(),
+                _subject: "UpChances contact form"
+            };
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Sending...";
+            }
+            fetch("https://formsubmit.co/ajax/raaghvv0508@gmail.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Send failed: " + response.status);
+                }
+                contactForm.reset();
+                showStatus("success", "Thank you, your message has been sent. We will be in touch soon.");
+            }).catch(function () {
+                showStatus("error", "Something went wrong and your message was not sent. Please email us at hello@upchances.ca and we will pick it up from there.");
+            }).then(function () {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = submitLabel;
+                }
+            });
         });
     }
 

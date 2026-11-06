@@ -20,6 +20,7 @@
                 <img src="img/logo.png" class="logo" alt="UpChances logo">
                 <span class="logo-text">UpChances</span>
             </a>
+            <a class="btn btn-brand btn-sm d-lg-none ms-auto me-2" href="#contact">Book</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -84,23 +85,14 @@
                     <div class="carousel-item active">
                         <img src="https://picsum.photos/id/192/1200/700" class="d-block w-100"
                             alt="People gathered at tables in a bright community space">
-                        <div class="carousel-caption">
-                            <p class="carousel-caption-text">Our network is here for you.</p>
-                        </div>
                     </div>
                     <div class="carousel-item">
                         <img src="https://picsum.photos/id/9/1200/700" class="d-block w-100"
                             alt="A laptop, notebook and phone on a desk, set up for training and job search work" loading="lazy">
-                        <div class="carousel-caption">
-                            <p class="carousel-caption-text">Practical help, from first resume to first paycheque.</p>
-                        </div>
                     </div>
                     <div class="carousel-item">
                         <img src="https://picsum.photos/id/838/1200/700" class="d-block w-100"
                             alt="A woman hugging a young child on a city street" loading="lazy">
-                        <div class="carousel-caption">
-                            <p class="carousel-caption-text">People over process, always.</p>
-                        </div>
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
@@ -311,7 +303,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-7">
-                    <form class="contact-form" action="mailto:hello@upchances.ca" method="post" enctype="text/plain">
+                    <form class="contact-form" id="contact-form">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="field-name" class="form-label">Your name</label>
@@ -338,6 +330,9 @@
                             <div class="col-12">
                                 <button type="submit" class="btn btn-brand btn-lg">Send message</button>
                             </div>
+                            <div class="col-12">
+                                <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -358,7 +353,7 @@
                         and job seekers in Edmonton, Alberta.</p>
                 </div>
                 <div class="col-lg-2 col-md-4">
-                    <h4>Explore</h4>
+                    <h3>Explore</h3>
                     <ul class="footer-list">
                         <li><a href="#programs">Programs</a></li>
                         <li><a href="#how">How it works</a></li>
@@ -367,7 +362,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    <h4>Programs</h4>
+                    <h3>Programs</h3>
                     <ul class="footer-list">
                         <li><a href="#programs">Skills training</a></li>
                         <li><a href="#programs">Employment support</a></li>
@@ -376,7 +371,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-4">
-                    <h4>Get in touch</h4>
+                    <h3>Get in touch</h3>
                     <ul class="footer-list">
                         <li>Edmonton, Alberta</li>
                         <li><a href="mailto:hello@upchances.ca">hello@upchances.ca</a></li>
@@ -385,7 +380,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="mb-0">&copy; 2026 UpChances. Concept redesign built with Bootstrap for portfolio purposes.</p>
+                <p class="mb-0">&copy; 2026 UpChances. All rights reserved.</p>
             </div>
         </div>
     </footer>
