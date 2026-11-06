@@ -64,12 +64,16 @@ section[id], header[id] {
     border: 2px solid var(--amber);
     border-radius: 10px;
     padding: 10px 22px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+        transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-brand:hover, .btn-brand:focus {
     background: #d9a204;
     border-color: #d9a204;
     color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(154, 107, 0, 0.28);
 }
 
 .btn-outline-ink {
@@ -79,11 +83,24 @@ section[id], header[id] {
     border: 2px solid var(--ink);
     border-radius: 10px;
     padding: 10px 22px;
+    transition: background-color 0.25s ease, color 0.25s ease,
+        transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-outline-ink:hover, .btn-outline-ink:focus {
     background: var(--ink);
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 46, 61, 0.22);
+}
+
+.hero-card .btn-light {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-card .btn-light:hover, .hero-card .btn-light:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .btn-lg {
@@ -104,10 +121,95 @@ section[id], header[id] {
     font-weight: 600;
     font-size: 17px;
     margin-left: 10px;
+    position: relative;
+    transition: color 0.25s ease;
 }
 
-.site-nav .nav-link:hover {
+.site-nav .nav-link:hover, .site-nav .nav-link:focus {
     color: var(--amber-dark);
+}
+
+/* Desktop: an amber underline grows in under the hovered link */
+@media (min-width: 992px) {
+    .site-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        bottom: 1px;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--amber);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .site-nav .nav-link:hover::after, .site-nav .nav-link:focus::after {
+        transform: scaleX(1);
+    }
+}
+
+/* Toggler: clear open state with a soft turn and a sand backdrop */
+.navbar-toggler {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.35);
+}
+
+.navbar-toggler .navbar-toggler-icon {
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler[aria-expanded="true"] {
+    background: var(--sand);
+    border-color: var(--line);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    transform: rotate(90deg);
+}
+
+/* Mobile menu: the panel drops in under the bar and the links
+   stagger in one by one as Bootstrap adds .show */
+@keyframes navItemIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .site-nav .navbar-collapse {
+        border-top: 1px solid var(--line);
+        margin-top: 10px;
+        padding: 8px 4px 14px;
+    }
+
+    .site-nav .navbar-nav .nav-item {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    .site-nav .navbar-collapse.show .nav-item {
+        animation: navItemIn 0.45s ease forwards;
+    }
+
+    .site-nav .navbar-collapse.show .nav-item:nth-child(1) { animation-delay: 0s; }
+    .site-nav .navbar-collapse.show .nav-item:nth-child(2) { animation-delay: 0.05s; }
+    .site-nav .navbar-collapse.show .nav-item:nth-child(3) { animation-delay: 0.1s; }
+    .site-nav .navbar-collapse.show .nav-item:nth-child(4) { animation-delay: 0.15s; }
+    .site-nav .navbar-collapse.show .nav-item:nth-child(5) { animation-delay: 0.2s; }
+    .site-nav .navbar-collapse.show .nav-item:nth-child(6) { animation-delay: 0.25s; }
 }
 
 .logo {
@@ -125,10 +227,22 @@ section[id], header[id] {
 }
 
 /* Hero */
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .hero {
     background: var(--paper);
     padding: 88px 0 96px;
     border-bottom: 1px solid var(--line);
+    animation: heroIn 0.7s ease both;
 }
 
 .hero-title {
@@ -201,16 +315,86 @@ section[id], header[id] {
     line-height: 22px;
 }
 
-/* Placeholder photos: fixed aspect ratios keep the layout
-   from shifting while images load */
-.photo-hero {
+/* Hero carousel: Bootstrap's component restyled to the palette.
+   Fixed aspect ratios keep the layout from shifting while
+   images load */
+.hero-carousel {
+    margin-top: 56px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--navy-deep);
+    animation: heroIn 0.7s ease 0.2s both;
+}
+
+.hero-carousel .carousel-item img {
     display: block;
     width: 100%;
     aspect-ratio: 21 / 9;
     object-fit: cover;
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-    margin-top: 56px;
+}
+
+.hero-carousel .carousel-caption {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    text-align: left;
+    padding: 18px 150px 18px 28px;
+    background: rgba(10, 34, 46, 0.8);
+}
+
+.carousel-caption-text {
+    font-family: "Fraunces", serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.hero-carousel .carousel-indicators {
+    left: auto;
+    right: 22px;
+    bottom: 24px;
+    z-index: 3;
+    margin: 0;
+}
+
+.hero-carousel .carousel-indicators [data-bs-target] {
+    width: 26px;
+    height: 5px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.45);
+    opacity: 1;
+    transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+.hero-carousel .carousel-indicators .active {
+    width: 38px;
+    background-color: var(--amber);
+}
+
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+    width: 46px;
+    height: 46px;
+    top: 50%;
+    bottom: auto;
+    z-index: 3;
+    transform: translateY(-50%);
+    margin: 0 16px;
+    border-radius: 50%;
+    background: rgba(14, 46, 61, 0.5);
+    opacity: 1;
+    transition: background-color 0.3s ease;
+}
+
+.hero-carousel .carousel-control-prev:hover,
+.hero-carousel .carousel-control-next:hover,
+.hero-carousel .carousel-control-prev:focus,
+.hero-carousel .carousel-control-next:focus {
+    background: var(--amber);
+    opacity: 1;
 }
 
 .photo-about {
@@ -309,6 +493,12 @@ section[id], header[id] {
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 34px 30px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
 }
 
 .step-number {
@@ -367,6 +557,12 @@ section[id], header[id] {
     padding: 34px 30px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.involve-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(242, 183, 5, 0.55);
 }
 
 .involve-card h3 {
@@ -386,6 +582,7 @@ section[id], header[id] {
     margin-top: auto;
     padding-top: 8px;
     align-self: flex-start;
+    transition: color 0.25s ease;
 }
 
 .involve-link:hover {
@@ -453,6 +650,7 @@ section[id], header[id] {
 /* Footer */
 .site-footer {
     background: var(--navy-deep);
+    border-top: 4px solid var(--amber);
     padding: 70px 0 0;
     color: #b9c9cf;
 }
@@ -485,10 +683,13 @@ section[id], header[id] {
 .footer-list a {
     color: #b9c9cf;
     text-decoration: none;
+    display: inline-block;
+    transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .footer-list a:hover {
     color: var(--amber);
+    transform: translateX(4px);
 }
 
 .footer-bottom {
@@ -530,6 +731,16 @@ section[id], header[id] {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+
+    .hero, .hero-carousel {
+        animation: none;
+    }
+
+    .site-nav .navbar-nav .nav-item {
+        opacity: 1;
+        transform: none;
+        animation: none;
     }
 }
 
@@ -581,9 +792,34 @@ section[id], header[id] {
         font-size: 25px;
     }
 
-    .photo-hero {
-        aspect-ratio: 4 / 3;
+    .hero-carousel {
         margin-top: 36px;
+        border-radius: 14px;
+    }
+
+    .hero-carousel .carousel-item img {
+        aspect-ratio: 4 / 3;
+    }
+
+    .hero-carousel .carousel-caption {
+        padding: 14px 18px 34px;
+    }
+
+    .carousel-caption-text {
+        font-size: 17px;
+    }
+
+    .hero-carousel .carousel-indicators {
+        right: auto;
+        left: 18px;
+        bottom: 12px;
+    }
+
+    .hero-carousel .carousel-control-prev,
+    .hero-carousel .carousel-control-next {
+        width: 38px;
+        height: 38px;
+        margin: 0 10px;
     }
 
     .section-head h2 {
