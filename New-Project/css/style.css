@@ -258,6 +258,15 @@ button:focus-visible,
     background: var(--sand);
 }
 
+/* Desktop: the actions wrapper generates no box of its own, so the
+   Book button and toggler lay out exactly as direct children of the
+   bar, the same as before the wrapper existed */
+@media (min-width: 992px) {
+    .site-nav .nav-actions {
+        display: contents;
+    }
+}
+
 /* Mobile menu: solid panel under the bar, one full-height row per
    link so every target is easy to tap and easy to read */
 @keyframes navItemIn {
@@ -292,9 +301,24 @@ button:focus-visible,
         border-bottom: none;
     }
 
-    .site-nav .btn-brand {
+    /* Full-width CTA only inside the open menu panel. This rule used
+       to target every .btn-brand in the bar, which also caught the
+       standalone header Book button and forced the mobile header to
+       wrap into three stacked rows. */
+    .site-nav .navbar-collapse .btn-brand {
         width: 100%;
         margin-top: 10px;
+    }
+
+    /* Header actions (Book + toggler) stay one compact group that
+       never shrinks or splits across rows */
+    .site-nav .nav-actions {
+        flex-shrink: 0;
+    }
+
+    .site-nav .nav-actions .btn-brand {
+        padding: 8px 16px;
+        min-height: 44px;
     }
 
     .site-nav .navbar-nav .nav-item {
